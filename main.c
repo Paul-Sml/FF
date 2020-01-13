@@ -124,7 +124,7 @@ int main(void)
 			defOnM = 1;
 			printf("Le monstre se defend ! il reduit ses degats de 75% !");
 		}
-		if (tour == 3)
+		if (tourM == 3)
 		{
 			printf("Le montre vous empoisonne !, Vous devez vous gerir ou vous perderez %d par tour !",bleedL );
 		}
