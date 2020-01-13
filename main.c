@@ -14,15 +14,18 @@ int genRandoms(int lower, int upper,int count){
     } 
 } 
 
-
+void clrscr()
+{
+    system("@cls||clear");
+}
 
 
 
 int tourPlayer(int pvM,int pvJ,int pmJ){
 	int choix;
 
-	printf("Vous avez %d PV et %d PM, \nLe monstre a %d PV",pvJ,pmJ,pvM );
-	printf("Que voulez vous faire ? \nAttaque:1 Defence:2 Competence:3\n");
+	printf("Vous avez %d PV et %d PM, \nLe monstre a %d PV\n",pvJ,pmJ,pvM );
+	printf("Que voulez vous faire ? \nAttaque:1 Defence:2 Competence:3 Antidote:4\n");
 	scanf("%d",&choix);
 	if (choix == 1)
 	{
@@ -44,6 +47,10 @@ int tourPlayer(int pvM,int pvJ,int pmJ){
 			tourPlayer(pvM,pvJ,pmJ);
 		}
 	}
+	if (choix == 4)
+	{
+		return choix;
+	}
 
 }
 
@@ -63,7 +70,7 @@ int poison(){
 int main(void)
 {
 	int lower = 1, upper = 3, count = 1;
-
+	int game = 1;
 	int defOn = 0;
 	int tour;
 	int tourM;
@@ -73,36 +80,58 @@ int main(void)
 	int bleedL = 0;
 	srand(time(0));
 	
-	while(pvJoueur>0 || pvMonstre>0){
+	while(game){
 		defOn = 0;
 		pmJoueur++;
 		tour = tourPlayer(pvMonstre, pvJoueur, pmJoueur);
-		//printf("%d\n",tour);
+		printf("%d\n",bleedL);
+
+
+		if (bleedL > 0)
+		{
+			pvJoueur = pvJoueur - bleedL;
+			printf("Vous etes empoisonnez, vous perdez %dPV\n Il vous reste %d PV\n",bleedL, pvJoueur );
+		}
 
 		if (tour == 1)
 		{
 			if (defOnM == 1)
 			{
+				clrscr();
 				pvMonstre --;
 				printf("Vous attaquez le monstre il perd 1PV, il lui reste %dPV\n",pvMonstre );
+				
 			}
 			else{
+				clrscr();
 				pvMonstre -= 4;
 				printf("Vous attaquez le monstre il perd 4PV, il lui reste %dPV\n",pvMonstre );	
+				
 			}
 			
 		}
 		if (tour == 2)
 		{
+			clrscr();
 			defOn = 1;
 			printf("vous vous defendez ! vous reduisez vos degats de 75% !\n");
+			
 		}
 		if (tour == 3)
 		{
+			clrscr();
 			pmJoueur -=7;
 			pvMonstre -= 10;
 			printf("Vous lancez une boule de feu ! \n Vous perdez 7PM ! il vous reste %dPM\n Elle inflige 10 points de degats au Montre !\n il lui reste %dPV\n",pmJoueur,pvMonstre);
+			
 		}
+		if (tour == 4)
+		{
+			clrscr();
+			bleedL = 0;
+			printf("vous n'etes plus empoisonne!\n" );
+		}
+
 
 		printf("\n");
 		defOnM = 0;
@@ -122,12 +151,15 @@ int main(void)
 		if (tourM == 2)
 		{
 			defOnM = 1;
-			printf("Le monstre se defend ! il reduit ses degats de 75% !");
+			printf("Le monstre se defend ! il reduit ses degats de 75% !\n");
 		}
 		if (tourM == 3)
 		{
-			printf("Le montre vous empoisonne !, Vous devez vous gerir ou vous perderez %d par tour !",bleedL );
+			bleedL++;
+			printf("Le montre vous empoisonne !, Vous devez vous gerir ou vous perderez %d par tour !\n",bleedL );
 		}
+		printf("\n");
+
 	}
 
 	
