@@ -1,4 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h> 
+#include <time.h>
+
+
+
+
+int genRandoms(int lower, int upper,int count){ 
+    int i; 
+    for (i = 0; i < count; i++) { 
+        int num = (rand() % 
+           (upper - lower + 1)) + lower; 
+        return num; 
+    } 
+} 
+
+
+
 
 
 int tourPlayer(int pvM,int pvJ,int pmJ){
@@ -31,7 +48,11 @@ int tourPlayer(int pvM,int pvJ,int pmJ){
 }
 
 
-int tourMonstre(int pvM,int pvJ){
+int tourMonstre(int pvM,int pvJ,int lower, int upper,int count){
+	int choix;
+	printf("Tour du montre!\n");
+	choix = genRandoms(lower, upper, count);
+	return choix;
 
 }
 
@@ -41,20 +62,35 @@ int poison(){
 
 int main(void)
 {
+	int lower = 1, upper = 3, count = 1;
+
 	int defOn = 0;
 	int tour;
+	int tourM;
 	int pvMonstre = 50, pvJoueur = 50;
 	int pmJoueur = 10;
+	int defOnM = 0;
+	int bleedL = 0;
+	srand(time(0));
 	
 	while(pvJoueur>0 || pvMonstre>0){
 		defOn = 0;
+		pmJoueur++;
 		tour = tourPlayer(pvMonstre, pvJoueur, pmJoueur);
 		//printf("%d\n",tour);
 
 		if (tour == 1)
 		{
-			pvMonstre -= 4;
-			printf("Vous attaquez le monstre il perd 4PV, il lui reste %dPV\n",pvMonstre );
+			if (defOnM == 1)
+			{
+				pvMonstre --;
+				printf("Vous attaquez le monstre il perd 1PV, il lui reste %dPV\n",pvMonstre );
+			}
+			else{
+				pvMonstre -= 4;
+				printf("Vous attaquez le monstre il perd 4PV, il lui reste %dPV\n",pvMonstre );	
+			}
+			
 		}
 		if (tour == 2)
 		{
@@ -68,7 +104,30 @@ int main(void)
 			printf("Vous lancez une boule de feu ! \n Vous perdez 7PM ! il vous reste %dPM\n Elle inflige 10 points de degats au Montre !\n il lui reste %dPV\n",pmJoueur,pvMonstre);
 		}
 
-		tourMonstre(pvMonstre, pvJoueur);
+		printf("\n");
+		defOnM = 0;
+		tourM = tourMonstre(pvMonstre, pvJoueur,lower, upper, count);
+		if (tourM == 1){
+			if (defOn == 1)
+			{
+				pvJoueur--;
+				printf("Le montre vous attaque !, grace a votre defence vous perdez 1PV\nIl vous reste %dPV\n",pvJoueur);
+			}
+			else{
+				pvJoueur-=4;
+				printf("Le montre vous attaque !\nVous perdez 4PV !\nIl vous reste %dPV\n",pvJoueur);
+			}
+			
+		}
+		if (tourM == 2)
+		{
+			defOnM = 1;
+			printf("Le monstre se defend ! il reduit ses degats de 75% !");
+		}
+		if (tour == 3)
+		{
+			printf("Le montre vous empoisonne !, Vous devez vous gerir ou vous perderez %d par tour !",bleedL );
+		}
 	}
 
 	
