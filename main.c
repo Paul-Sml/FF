@@ -23,6 +23,34 @@ void clrscr()
 
 int tourPlayer(int pvM,int pvJ,int pmJ){
 	int choix;
+	int classe;
+
+	printf("Quelle classe souhaitez-vous ? \nPaladin:1 Sorcier:2 Voleur:3 Ranger:4\n");
+	scanf("%d",&classe);
+
+	if (classe == 1){
+		pvj = ;
+		pmj = ;
+		return choix;
+	}
+
+	if (classe == 2){
+		pvj = ;
+		pmj = ;
+		return choix;
+	}
+
+	if (classe == 3){
+		pvj = ;
+		pmj = ;
+		return choix;
+	}
+
+	if (classe == 4){
+		pvj = ;
+		pmj = ;
+		return choix;
+	}
 
 	printf("Vous avez %d PV et %d PM, \nLe monstre a %d PV\n",pvJ,pmJ,pvM );
 	printf("Que voulez vous faire ? \nAttaque:1 Defence:2 Competence:3 Antidote:4\n");
