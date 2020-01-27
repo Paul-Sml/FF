@@ -79,89 +79,102 @@ int main(void)
 	int defOnM = 0;
 	int bleedL = 0;
 	srand(time(0));
+	int nombreDeMonstres = 0;
+
+	printf("Combien de monstres voulez vous combattre ?\n");
+	scanf("%d",&nombreDeMonstres);
 	
-	while(game){
-		defOn = 0;
-		pmJoueur++;
-		tour = tourPlayer(pvMonstre, pvJoueur, pmJoueur);
-		printf("%d\n",bleedL);
+	while(nombreDeMonstres>0){
+		while(pvJoueur>0 && pvMonstre>0){
+			defOn = 0;
+			pmJoueur++;
+			tour = tourPlayer(pvMonstre, pvJoueur, pmJoueur);
+			printf("%d\n",bleedL);
 
 
-		if (bleedL > 0)
-		{
-			pvJoueur = pvJoueur - bleedL;
-			printf("Vous etes empoisonnez, vous perdez %dPV\n Il vous reste %d PV\n",bleedL, pvJoueur );
-		}
-
-		if (tour == 1)
-		{
-			if (defOnM == 1)
+			if (bleedL > 0)
 			{
-				clrscr();
-				pvMonstre --;
-				printf("Vous attaquez le monstre il perd 1PV, il lui reste %dPV\n",pvMonstre );
+				pvJoueur = pvJoueur - bleedL;
+				printf("Vous etes empoisonnez, vous perdez %dPV\n Il vous reste %d PV\n",bleedL, pvJoueur );
+			}
+
+			if (tour == 1)
+			{
+				if (defOnM == 1)
+				{
+					clrscr();
+					pvMonstre --;
+					printf("Vous attaquez le monstre il perd 1PV, il lui reste %dPV\n",pvMonstre );
+					
+				}
+				else{
+					clrscr();
+					pvMonstre -= 4;
+					printf("Vous attaquez le monstre il perd 4PV, il lui reste %dPV\n",pvMonstre );	
+					
+				}
 				
 			}
-			else{
+			if (tour == 2)
+			{
 				clrscr();
-				pvMonstre -= 4;
-				printf("Vous attaquez le monstre il perd 4PV, il lui reste %dPV\n",pvMonstre );	
+				defOn = 1;
+				printf("vous vous defendez ! vous reduisez vos degats de 75% !\n");
 				
 			}
-			
-		}
-		if (tour == 2)
-		{
-			clrscr();
-			defOn = 1;
-			printf("vous vous defendez ! vous reduisez vos degats de 75% !\n");
-			
-		}
-		if (tour == 3)
-		{
-			clrscr();
-			pmJoueur -=7;
-			pvMonstre -= 10;
-			printf("Vous lancez une boule de feu ! \n Vous perdez 7PM ! il vous reste %dPM\n Elle inflige 10 points de degats au Montre !\n il lui reste %dPV\n",pmJoueur,pvMonstre);
-			
-		}
-		if (tour == 4)
-		{
-			clrscr();
-			bleedL = 0;
-			printf("vous n'etes plus empoisonne!\n" );
-		}
-
-
-		printf("\n");
-		defOnM = 0;
-		tourM = tourMonstre(pvMonstre, pvJoueur,lower, upper, count);
-		if (tourM == 1){
-			if (defOn == 1)
+			if (tour == 3)
 			{
-				pvJoueur--;
-				printf("Le montre vous attaque !, grace a votre defence vous perdez 1PV\nIl vous reste %dPV\n",pvJoueur);
+				clrscr();
+				pmJoueur -=7;
+				pvMonstre -= 10;
+				printf("Vous lancez une boule de feu ! \n Vous perdez 7PM ! il vous reste %dPM\n Elle inflige 10 points de degats au Montre !\n il lui reste %dPV\n",pmJoueur,pvMonstre);
+				
 			}
-			else{
-				pvJoueur-=4;
-				printf("Le montre vous attaque !\nVous perdez 4PV !\nIl vous reste %dPV\n",pvJoueur);
+			if (tour == 4)
+			{
+				clrscr();
+				bleedL = 0;
+				printf("vous n'etes plus empoisonne!\n" );
 			}
-			
-		}
-		if (tourM == 2)
-		{
-			defOnM = 1;
-			printf("Le monstre se defend ! il reduit ses degats de 75% !\n");
-		}
-		if (tourM == 3)
-		{
-			bleedL++;
-			printf("Le montre vous empoisonne !, Vous devez vous gerir ou vous perderez %d par tour !\n",bleedL );
-		}
-		printf("\n");
 
+
+			printf("\n");
+			defOnM = 0;
+			if (pvMonstre>0)
+			{
+				tourM = tourMonstre(pvMonstre, pvJoueur,lower, upper, count);
+				if (tourM == 1){
+					if (defOn == 1)
+					{
+						pvJoueur--;
+						printf("Le montre vous attaque !, grace a votre defence vous perdez 1PV\nIl vous reste %dPV\n",pvJoueur);
+					}
+					else{
+						pvJoueur-=4;
+						printf("Le montre vous attaque !\nVous perdez 4PV !\nIl vous reste %dPV\n",pvJoueur);
+					}
+					
+				}
+				if (tourM == 2)
+				{
+					defOnM = 1;
+					printf("Le monstre se defend ! il reduit ses degats de 75% !\n");
+				}
+				if (tourM == 3)
+				{
+					bleedL++;
+					printf("Le montre vous empoisonne !, Vous devez vous gerir ou vous perderez %d par tour !\n",bleedL );
+				}
+				printf("\n");
+
+			}
+				
+		}
+	nombreDeMonstres = nombreDeMonstres-1;
+	pvJoueur = pvJoueur + 40;
+	printf("Vous vous soignez de 40 pv\n");
+	pvMonstre = 50;	
 	}
-
 	
 	return 0;
 }
